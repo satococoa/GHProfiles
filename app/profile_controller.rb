@@ -3,51 +3,48 @@ class ProfileController < UIViewController
 
   def viewDidLoad
     super
-    @settings_controller = SettingsController.alloc.initController
-    @settings_controller.form.render
     view.backgroundColor = UIColor.whiteColor
-    navigationItem.leftBarButtonItem = UIBarButtonItem.alloc.initWithTitle("Settings", style:UIBarButtonItemStyleBordered, target:self, action:'open_setting')
+    navigationItem.leftBarButtonItem = UIBarButtonItem.alloc.initWithTitle("Logout", style:UIBarButtonItemStyleBordered, target:self, action:'confirm_logout')
     navigationItem.rightBarButtonItem = UIBarButtonItem.alloc.initWithTitle("Search", style:UIBarButtonItemStyleDone, target:self, action:'open_search')
   end
 
-  def viewWillAppear(animated)
-    settings = @settings_controller.form.render
-    username = settings[:username]
-    password = settings[:password]
+  def confirm_logout
+    alert = UIAlertView.alloc.initWithTitle('Logout', message:'Are you sure to logout?', delegate:self, cancelButtonTitle:'Cancel', otherButtonTitles:'Yes', nil)
+    alert.show
+  end
 
-    App.delegate.login(username, password) do |res|
-      if res
-        if @username.nil?
-          load_self
-        else
-          load_user(@username)
-        end
-      else
-        open_setting
-      end
-    end
+  def alertView(alert_view, clickedButtonAtIndex:button_index)
+    return if button_index == alert_view.cancelButtonIndex
+    logout
+  end
+
+  def logout
+    App.delegate.logout
   end
 
   def open_search
     p 'open_search'
   end
 
-  def open_setting
-    @settings_controller.delegate = self
-    settings_nav = UINavigationController.alloc.initWithRootViewController(@settings_controller)
-    presentModalViewController(settings_nav, animated:true)
-  end
-
-  def close_setting(setting)
-    setting.delegate = nil
-    dismissModalViewControllerAnimated(true)
-  end
-
   def load_self
-    p 'load_self'
+    App.delegate.github.userWithSuccess(
+      lambda {|res|
+        p res
+      },
+      failure:lambda {|err|
+        p err
+      }
+    )
   end
 
   def load_user(username)
-    p 'load_user'
+    App.delegate.github.user(username,
+      success:lambda {|res|
+        p res
+      },
+      failure:lambda {|err|
+        p err
+      }
+    )
   end
 end

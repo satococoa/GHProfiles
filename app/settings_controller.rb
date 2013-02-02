@@ -1,6 +1,4 @@
 class SettingsController < Formotion::FormController
-  attr_accessor :delegate
-
   @@settings_hash = {
     title: 'Setting',
     persist_as: :settings,
@@ -21,6 +19,14 @@ class SettingsController < Formotion::FormController
           secure: true,
           auto_correction: :no,
           auto_capitalization: :none
+        },
+      ]
+    },
+    {
+      rows: [
+        {
+          title: 'Login',
+          type: :submit
         }
       ]
     }]
@@ -28,15 +34,23 @@ class SettingsController < Formotion::FormController
 
   def initController
     f = Formotion::Form.persist(@@settings_hash)
+    f.on_submit do |fm|
+      challenge(fm)
+    end
     initWithForm(f)
   end
 
-  def viewDidLoad
-    super
-    navigationItem.rightBarButtonItem = UIBarButtonItem.alloc.initWithTitle("Done", style:UIBarButtonItemStyleDone, target:self, action:'done')
-  end
-
-  def done
-    @delegate.close_setting(self)
+  def challenge(submitted_form)
+    data = submitted_form.render
+    username = data[:username]
+    password = data[:password]
+    App.delegate.login(username, password) do |res|
+      if res
+        self.form.save
+        dismissModalViewControllerAnimated(true)
+      else
+        App.alert('Error!!!!')
+      end
+    end
   end
 end
