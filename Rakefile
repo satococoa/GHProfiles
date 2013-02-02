@@ -7,4 +7,8 @@ Bundler.require :default
 Motion::Project::App.setup do |app|
   # Use `rake config' to see complete project settings.
   app.name = 'GHProfiles'
+
+  app.pods do
+    pod 'UAGithubEngine'
+  end
 end
