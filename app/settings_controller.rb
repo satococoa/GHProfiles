@@ -47,6 +47,7 @@ class SettingsController < Formotion::FormController
     password = data[:password]
     App.delegate.login(username, password) do |res|
       if res
+        App.hide_loading
         self.form.save
         dismissModalViewControllerAnimated(true)
       else

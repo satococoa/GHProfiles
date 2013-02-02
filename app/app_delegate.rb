@@ -10,6 +10,7 @@ class AppDelegate
 
     @window.rootViewController = navigation_controller
     @window.makeKeyAndVisible
+    initial_login
     true
   end
 
