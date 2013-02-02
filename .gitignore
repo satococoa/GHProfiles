@@ -17,3 +17,4 @@ nbproject
 vendor/bundle
 vendor/Pods
 .bundle
+config.yml
