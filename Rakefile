@@ -38,5 +38,6 @@ Motion::Project::App.setup do |app|
 
   app.pods do
     pod 'UAGithubEngine'
+    pod 'SVProgressHUD'
   end
 end

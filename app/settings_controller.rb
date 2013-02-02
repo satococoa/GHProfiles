@@ -41,6 +41,7 @@ class SettingsController < Formotion::FormController
   end
 
   def challenge(submitted_form)
+    App.show_loading
     data = submitted_form.render
     username = data[:username]
     password = data[:password]
@@ -49,7 +50,7 @@ class SettingsController < Formotion::FormController
         self.form.save
         dismissModalViewControllerAnimated(true)
       else
-        App.alert('Error!!!!')
+        App.error('Login failed...')
       end
     end
   end

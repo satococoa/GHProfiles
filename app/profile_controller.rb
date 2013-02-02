@@ -6,6 +6,7 @@ class ProfileController < UIViewController
     view.backgroundColor = UIColor.whiteColor
     navigationItem.leftBarButtonItem = UIBarButtonItem.alloc.initWithTitle("Logout", style:UIBarButtonItemStyleBordered, target:self, action:'confirm_logout')
     navigationItem.rightBarButtonItem = UIBarButtonItem.alloc.initWithTitle("Search", style:UIBarButtonItemStyleDone, target:self, action:'open_search')
+    App.delegate.initial_login
   end
 
   def confirm_logout

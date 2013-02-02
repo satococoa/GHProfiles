@@ -10,13 +10,20 @@ class AppDelegate
 
     @window.rootViewController = navigation_controller
     @window.makeKeyAndVisible
-
-    data = settings_controller.form.render
-    login(data[:username], data[:password]) do |res|
-      open_settings unless res
-    end
-
     true
+  end
+
+  def initial_login
+    App.show_loading
+    Dispatch::Queue.concurrent.async {
+      data = settings_controller.form.render
+      login(data[:username], data[:password]) do |res|
+        Dispatch::Queue.main.async {
+          open_settings unless res
+          App.hide_loading
+        }
+      end
+    }
   end
 
   def settings_controller

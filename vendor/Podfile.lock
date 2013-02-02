@@ -1,11 +1,14 @@
 
 PODS:
+- SVProgressHUD (0.9)
 - UAGithubEngine (2.3)
 
 DEPENDENCIES:
+- SVProgressHUD
 - UAGithubEngine
 
 SPEC CHECKSUMS:
+  SVProgressHUD: 98935fbafaf0031df4a9cafca3c66eaf3da06967
   UAGithubEngine: 931cbfaaec42ee192dfecf9aeaa75bd4e1afc595
 
 COCOAPODS: 0.16.1
