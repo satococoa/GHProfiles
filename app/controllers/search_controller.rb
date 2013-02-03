@@ -16,6 +16,7 @@ class SearchController < UIViewController
       b.setTitle('Read', forState:UIControlStateNormal)
       b.addTarget(self, action:'open_reader', forControlEvents:UIControlEventTouchUpInside)
       b.frame = [[10, 220], [300, 60]]
+      b.styleId = 'read-button'
     end
     view.addSubview(@read_button)
 
@@ -32,9 +33,7 @@ class SearchController < UIViewController
   end
 
   def viewWillAppear(animated)
-    Dispatch.once {
-      display_qrcode(@myself)
-    }
+    display_qrcode(@myself)
   end
 
   def display_qrcode(user)
