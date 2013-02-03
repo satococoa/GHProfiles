@@ -63,18 +63,22 @@ class ProfileView < UITableView
       cell = table_view.dequeueReusableCellWithIdentifier(cell_id) ||
         UITableViewCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier:cell_id)
       cell.textLabel.text = @user.blog
+      cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator
     when :url
       cell = table_view.dequeueReusableCellWithIdentifier(cell_id) ||
         UITableViewCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier:cell_id)
       cell.textLabel.text = @user.html_url
+      cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator
     when :followers
       cell = table_view.dequeueReusableCellWithIdentifier(cell_id) ||
         UITableViewCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier:cell_id)
       cell.textLabel.text = "#{@user.followers} Followers"
+      # cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator
     when :following
       cell = table_view.dequeueReusableCellWithIdentifier(cell_id) ||
         UITableViewCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier:cell_id)
       cell.textLabel.text = "#{@user.following} Following"
+      # cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator
     end
     cell.selectionStyle = UITableViewCellSelectionStyleNone
     cell
@@ -82,7 +86,15 @@ class ProfileView < UITableView
 
   def tableView(table_view, didSelectRowAtIndexPath:index_path)
     cell_id = @@cells[index_path.row]
-    p cell_id
+    case cell_id
+    when :url
+      url = @user.html_url
+    when :blog
+      url = @user.blog
+    else
+      return
+    end
+    App.notification_center.post('URLTapped', self, {url: url})
   end
 
 end

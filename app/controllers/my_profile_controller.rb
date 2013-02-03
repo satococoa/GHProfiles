@@ -47,10 +47,18 @@ class MyProfileController < UIViewController
         fetch_myprofile
       end
     }
+    @open_url_observer = App.notification_center.observe('URLTapped') do |notif|
+      url = notif.userInfo[:url]
+      open_url(url)
+    end
   end
 
   def viewDidAppear(animated)
     profile_view.flashScrollIndicators
+  end
+
+  def viewWillDisappear(animated)
+    App.notification_center.unobserve(@open_url_observer)
   end
 
   def fetch_myprofile
@@ -93,5 +101,10 @@ class MyProfileController < UIViewController
     search_controller = SearchController.new
     search_controller.myself = @myself
     navigationController.pushViewController(search_controller, animated:true)
+  end
+
+  def open_url(url)
+    webview_controller = SVWebViewController.alloc.initWithAddress(url)
+    navigationController.pushViewController(webview_controller, animated:true)
   end
 end

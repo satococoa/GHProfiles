@@ -28,10 +28,18 @@ class ProfileController < UIViewController
   def viewWillAppear(animated)
     profile_view.deselectRowAtIndexPath(profile_view.indexPathForSelectedRow, animated:true)
     fetch_user(@username)
+    @open_url_observer = App.notification_center.observe('URLTapped') do |notif|
+      url = notif.userInfo[:url]
+      open_url(url)
+    end
   end
 
   def viewDidAppear(animated)
     profile_view.flashScrollIndicators
+  end
+
+  def viewWillDisappear(animated)
+    App.notification_center.unobserve(@open_url_observer)
   end
 
   def fetch_user(username)
@@ -53,6 +61,11 @@ class ProfileController < UIViewController
   def display_user(user)
     navigationItem.title = user.login
     profile_view.user = user
+  end
+
+  def open_url(url)
+    webview_controller = SVWebViewController.alloc.initWithAddress(url)
+    navigationController.pushViewController(webview_controller, animated:true)
   end
 
 end
