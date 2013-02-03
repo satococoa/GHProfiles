@@ -20,10 +20,10 @@ Motion::Project::App.setup do |app|
     # app.pixate.key  = config['pixate']['key']
     # app.pixate.framework = 'vendor/PXEngine.framework'
     # app.identifier = config['identifier']
-    # app.info_plist['CFBundleURLTypes'] = [
-    #   { 'CFBundleURLName' => config['identifier'],
-    #     'CFBundleURLSchemes' => ['ghprofiles'] }
-    # ]
+    app.info_plist['CFBundleURLTypes'] = [
+      { 'CFBundleURLName' => config['identifier'],
+        'CFBundleURLSchemes' => ['ghprofiles'] }
+    ]
 
     env = ENV['ENV'] || 'development'
     app.codesign_certificate = config[env]['certificate']
@@ -41,7 +41,7 @@ Motion::Project::App.setup do |app|
     pod 'SVProgressHUD'
     pod 'SDWebImage'
     pod 'SVWebViewController'
-    pod 'iOS-QR-Code-Encoder'
+    pod 'ObjQREncoder'
     pod 'ZBarSDK'
   end
 end
