@@ -10,7 +10,6 @@ class ProfileView < UITableView
       end
       self.user = User.new
       self.styleId = 'profile'
-
     end
   end
 
@@ -33,6 +32,7 @@ class ProfileView < UITableView
       UITableViewCell.alloc.initWithStyle(UITableViewCellStyleValue2, reuseIdentifier:cell_id)
     cell.textLabel.text = @user.instance_variables[index_path.row]
     cell.detailTextLabel.text = @user.instance_variable_get(@user.instance_variables[index_path.row]).to_s
+    cell.selectionStyle = UITableViewCellSelectionStyleNone
     cell
   end
 
