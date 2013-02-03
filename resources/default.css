@@ -12,7 +12,7 @@ navigation-bar {
 }
 
 #profile, #search {
-  background-color : linear-gradient(#292e31, #3a3f42);
+  /*background-color : linear-gradient(#292e31, #3a3f42);*/
 }
 
 #read-button {

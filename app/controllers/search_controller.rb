@@ -68,6 +68,7 @@ class SearchController < UIViewController
   def open_profile(username)
     profile_controller = ProfileController.new
     profile_controller.username = username
+    profile_controller.myself = @myself
     navigationController.pushViewController(profile_controller, animated:true)
   end
 end

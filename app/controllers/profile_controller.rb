@@ -1,5 +1,5 @@
 class ProfileController < UIViewController
-  attr_accessor :username
+  attr_accessor :username, :myself
 
   def viewDidLoad
     super
@@ -13,7 +13,16 @@ class ProfileController < UIViewController
   end
 
   def open_action
-    p 'open_action'
+    if @myself.following?(username)
+      action_sheet = UIActionSheet.alloc.initWithTitle('Follow', delegate:self, cancelButtonTitle:'Cancel', destructiveButtonTitle:'Unfollow', otherButtonTitles:nil)
+    else
+      action_sheet = UIActionSheet.alloc.initWithTitle('Follow', delegate:self, cancelButtonTitle:'Cancel', destructiveButtonTitle:nil, otherButtonTitles:'Follow', nil)
+    end
+    action_sheet.showInView(view)
+  end
+
+  def actionSheet(sheet, clickedButtonAtIndex:button_index)
+    p button_index
   end
 
   def viewWillAppear(animated)

@@ -14,6 +14,10 @@ class User
     @avatar_url    = hash['avatar_url']
   end
 
+  def following?(username)
+    true
+  end
+
   class << self
     def fetch_myself
       Github.api.userWithSuccess(
