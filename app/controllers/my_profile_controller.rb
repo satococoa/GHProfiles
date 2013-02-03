@@ -55,7 +55,8 @@ class MyProfileController < UIViewController
       p notif.userInfo
       if notif.userInfo[:error].nil?
         p "User: #{notif.userInfo[:user]}"
-        display_user(notif.userInfo[:user])
+        @myself = notif.userInfo[:user]
+        display_user(@myself)
       else
         open_settings
       end
@@ -84,6 +85,8 @@ class MyProfileController < UIViewController
   end
 
   def open_search
-    p 'open_search'
+    search_controller = SearchController.new
+    search_controller.myself = @myself
+    navigationController.pushViewController(search_controller, animated:true)
   end
 end
