@@ -42,6 +42,7 @@ class ProfileController < UIViewController
   end
 
   def display_user(user)
+    navigationItem.title = user.login
     profile_view.user = user
   end
 
