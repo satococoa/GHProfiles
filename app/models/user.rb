@@ -2,7 +2,7 @@ class User
   attr_accessor :login, :html_url, :blog, :location,
     :followers_url, :followers, :folloing_url, :following, :avatar_url
 
-  def initialize(hash)
+  def initialize(hash = {})
     @login         = hash['login']
     @html_url      = hash['html_url']
     @blog          = hash['blog']
