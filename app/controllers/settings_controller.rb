@@ -1,4 +1,6 @@
 class SettingsController < Formotion::FormController
+  attr_accessor :delegate
+
   @@settings_hash = {
     title: 'Setting',
     persist_as: :settings,
@@ -35,24 +37,8 @@ class SettingsController < Formotion::FormController
   def initController
     f = Formotion::Form.persist(@@settings_hash)
     f.on_submit do |fm|
-      challenge(fm)
+      @delegate.submit_settings(fm.render)
     end
     initWithForm(f)
-  end
-
-  def challenge(submitted_form)
-    App.show_loading
-    data = submitted_form.render
-    username = data[:username]
-    password = data[:password]
-    App.delegate.login(username, password) do |res|
-      if res
-        App.hide_loading
-        self.form.save
-        dismissModalViewControllerAnimated(true)
-      else
-        App.error('Login failed...')
-      end
-    end
   end
 end
