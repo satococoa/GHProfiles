@@ -39,5 +39,9 @@ Motion::Project::App.setup do |app|
   app.pods do
     pod 'UAGithubEngine'
     pod 'SVProgressHUD'
+    pod 'SDWebImage'
+    pod 'SVWebViewController'
+    pod 'iOS-QR-Code-Encoder'
+    pod 'ZBarSDK'
   end
 end
