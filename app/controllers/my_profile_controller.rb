@@ -1,6 +1,10 @@
 class MyProfileController < UIViewController
+  include Motion::Pixate::Observer
   def viewDidLoad
     super
+    # motion-pixate-observer
+    startObserving
+
     view.backgroundColor = UIColor.whiteColor
     view.addSubview(profile_view)
     navigationItem.leftBarButtonItem = UIBarButtonItem.alloc.initWithTitle("Logout", style:UIBarButtonItemStyleBordered, target:self, action:'confirm_logout')

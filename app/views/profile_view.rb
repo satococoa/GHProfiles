@@ -9,6 +9,8 @@ class ProfileView < UITableView
         self.reloadData if old_user != new_user
       end
       self.user = User.new
+      self.styleId = 'profile'
+
     end
   end
 

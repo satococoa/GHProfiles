@@ -4,6 +4,7 @@ class SearchController < UIViewController
   def viewDidLoad
     super
     navigationItem.title = 'Search'
+    view.styleId = 'search'
     view.backgroundColor = UIColor.whiteColor
     @qrcode_view = LoadableImageView.new.tap do |v|
       v.frame = [[60, 10], [200, 200]]
