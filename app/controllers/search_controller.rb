@@ -9,12 +9,24 @@ class SearchController < UIViewController
       v.loading = true
     end
     view.addSubview(@qrcode_view)
+
     @read_button = UIButton.buttonWithType(UIButtonTypeRoundedRect).tap do |b|
       b.setTitle('Read', forState:UIControlStateNormal)
       b.addTarget(self, action:'open_reader', forControlEvents:UIControlEventTouchUpInside)
       b.frame = [[10, 220], [300, 60]]
     end
     view.addSubview(@read_button)
+
+    @debug = UIButton.buttonWithType(UIButtonTypeRoundedRect).tap do |b|
+      b.setTitle('[Debug]', forState:UIControlStateNormal)
+      b.addTarget(self, action:'debug', forControlEvents:UIControlEventTouchUpInside)
+      b.frame = [[10, 300], [300, 60]]
+    end
+    view.addSubview(@debug)
+  end
+
+  def debug
+    open_profile('naoty')
   end
 
   def viewWillAppear(animated)
@@ -53,6 +65,8 @@ class SearchController < UIViewController
   end
 
   def open_profile(username)
-    App.success(username)
+    profile_controller = ProfileController.new
+    profile_controller.username = username
+    navigationController.pushViewController(profile_controller, animated:true)
   end
 end
